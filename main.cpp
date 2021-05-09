@@ -24,12 +24,13 @@ double matrix[NUM_ROWS][NUM_COLS] = {
 using namespace std;
 
 int main() {
-    auto lookup = [](unsigned long i,unsigned long j) {
-        return matrix[i][j];
+    auto lookup = [](unsigned long j,unsigned long i, vector<num_t>& a, vector<num_t>& b, int k, int p) {
+        return -matrix[i][j];
     };
-    vector<unsigned long> argmin = smawk<double>(NUM_ROWS, NUM_COLS, lookup);
-    for (unsigned long i = 0; i < argmin.size(); ++i) {
-        cout << i << " : " << argmin[i] << " " << matrix[i][argmin[i]] << endl;
+    vector<int> a;
+    vector<int> argmax = smawk<int>(NUM_COLS, NUM_ROWS, lookup, a, a, 0, 0);
+    for (int i = 0; i < argmax.size(); ++i) {
+        cout << i << " : " << argmax[i] << " " << lookup(i, argmax[i], a, a, 0, 0) << endl;
     }
     return 0;
 }
