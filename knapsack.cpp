@@ -17,16 +17,23 @@ class knapsack{
     vector<int> weight;
     vector<vector<num_t>> dp;
     vector<num_t> b;
+    vector<num_t> f;
 
     vector<num_t>& calculate_dp_i(vector<num_t>& a, vector<num_t>& b, int k, int n, int m){
-        vector<num_t> f(a.size(), 0);
+        cout << "dp_i" << " " << k << endl;
+        f.resize(a.size());
+        for (auto it : f) it = 0;
 
         for (int p = 0; p < k; p++){
-            auto lookup = [](unsigned long j, unsigned long i, vector<num_t>& a, vector<num_t>& b, int k, int p) {
+            auto lookup = [](unsigned long i, unsigned long j, vector<num_t>& a, vector<num_t>& b, int k, int p) {
                 if (j*k + p >= a.size() || i - j < 0 || i - j >= b.size()) return -1123123123;
                 return a[j*k + p] + b[i - j];
             };
             int cols = a.size() / k + bool(p <= a.size() % k), rows = b.size();
+            for (int i = 0; i < cols; i++) {
+                for (int j = 0; j < rows; j++) cout << lookup(i, j, a, b, k, p) << " ";
+                cout << endl;
+            }
             vector<num_t> argmax = smawk<num_t>(cols, rows, lookup, a, b, k, p);
             for (num_t i = 0; i < argmax.size(); ++i) {
                 f[i*k + p] = lookup(i, argmax[i], a, b, k, p);
@@ -35,12 +42,23 @@ class knapsack{
         }
 
         //TODO: sliding window
-
+        int l = 0, curr = 0;
+        vector<pair<num_t,int>> vec;
+        for (int r = 0; r <= T; r++){
+            while (vec.size() && vec.back().first <= f[r]) vec.pop_back();
+            vec.push_back({f[r], r});
+            while (vec.size() && r - vec[curr].second + 1 > k) ++curr;
+            f[r] = vec[curr].first;
+            cout << " ::" << f[r] << endl;
+            result = max(result, f[r]);
+        }
         return f;
     }
 public: 
+    num_t result = 0;
     knapsack(vector<num_t>& w, vector<num_t>& v, num_t T) : w(w), v(v), T(T){
-        S.resize(T);
+        if (w.size() != v.size()) { result = -1; return; }
+        S.resize(T + 1);
         //Partition items into sets
         for (int i = 0; i < w.size(); i++) S[w[i]].push_back(v[i]); //O(D log D) if W = {1,..,1}
 
@@ -71,7 +89,7 @@ public:
     }
 
 };
-num_t solve(vector <num_t> w, vector <num_t> v, num_t T){
+/*num_t solve(vector <num_t> w, vector <num_t> v, num_t T){
     vector <set <num_t>> S(T);
     vector <int> weights;
     //Partition items into sets
@@ -79,4 +97,4 @@ num_t solve(vector <num_t> w, vector <num_t> v, num_t T){
 
     for (int i = 0; i <= T; i++) if (S[i].size()) weights.push_back(i);
     return 0;
-}
+}*/
