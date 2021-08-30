@@ -15,12 +15,14 @@ template <typename T>
 void _smawk(
         const vector<num_t>& rows,
         const vector<num_t>& cols,
-        const function<T(num_t, num_t, vector<num_t>&, vector<num_t>&, int, int)>& lookup,
+        const function<T(num_t, num_t, vector<num_t>&, vector<num_t>&, int, int, int, int)>& lookup,
         vector<num_t>* result,
         vector<num_t>& a,
         vector<num_t>& b,
         int k,
-        int p) {
+        int p,
+        int n,
+        int m) {
     // Recursion base case
     if (rows.size() == 0) return;
 
@@ -33,7 +35,7 @@ void _smawk(
         while (true) {
             if (_cols.size() == 0) break;
             num_t row = rows[_cols.size() - 1];
-            if (lookup(row, col, a, b, k, p) <= lookup(row, _cols.back(), a, b, k, p))
+            if (lookup(row, col, a, b, k, p, n, m) <= lookup(row, _cols.back(), a, b, k, p, n, m))
                 break;
             _cols.pop_back();
         }
@@ -46,7 +48,7 @@ void _smawk(
     for (num_t i = 1; i < rows.size(); i += 2) {
         odd_rows.push_back(rows[i]);
     }
-    _smawk(odd_rows, _cols, lookup, result, a, b, k, p);
+    _smawk(odd_rows, _cols, lookup, result, a, b, k, p, n, m);
 
     unordered_map<num_t, num_t> col_idx_lookup;
     for (num_t idx = 0; idx < _cols.size(); ++idx) {
@@ -65,9 +67,9 @@ void _smawk(
         if (r < rows.size() - 1)
             stop = col_idx_lookup[(*result)[rows[r + 1]]];
         num_t argmax = _cols[start];
-        T min = lookup(row, argmax, a, b, k, p);
+        T min = lookup(row, argmax, a, b, k, p, n, m);
         for (num_t c = start + 1; c <= stop; ++c) {
-            T value = lookup(row, _cols[c], a, b, k, p);
+            T value = lookup(row, _cols[c], a, b, k, p, n, m);
             if (c == start || value > min) {
                 argmax = _cols[c];
                 min = value;
@@ -82,17 +84,19 @@ template <typename T>
 std::vector<num_t> smawk(
         const unsigned long num_rows,
         const unsigned long num_cols,
-        const std::function<T(unsigned long, unsigned long, vector<num_t>&, vector<num_t>&, int, int)>& lookup,
+        const std::function<T(unsigned long, unsigned long, vector<num_t>&, vector<num_t>&, int, int, int, int)>& lookup,
         vector<num_t>& a,
         vector<num_t>& b,
         int k,
-        int p){
+        int p,
+        int n,
+        int m){
                 vector<num_t> result;
                 result.resize(num_rows);
                 vector<num_t> rows(num_rows);
                 iota(begin(rows), end(rows), 0);
                 vector<num_t> cols(num_cols);
                 iota(begin(cols), end(cols), 0);
-                _smawk<double>(rows, cols, lookup, &result, a, b, k, p);
+                _smawk<double>(rows, cols, lookup, &result, a, b, k, p, n, m);
                 return result;
         }

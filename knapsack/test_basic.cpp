@@ -15,9 +15,14 @@ using namespace std;
 int main() {
     //vector<num_t> v{1, 3, 4, 5, 7, 2, 3}, w{1, 1, 3, 2, 4, 2, 2};
     //num_t T = 10;
-    vector<num_t> v{1, 1, 2, 2, 3, 3, 4, 4, 25}, w{1, 2, 2, 3, 3, 3, 3, 5, 10};
-    //num_t T = 157; //TODO: check
-    num_t T = 2500;
+    //vector<num_t> v{1, 1, 2, 2, 3, 3, 4, 4, 25}, w{1, 2, 2, 3, 3, 3, 3, 5, 10};
+    //num_t T = 30; //TODO: check
+    //num_t T = 2500;
+    //vector<num_t> v{1, 2, 3}, w{1, 2, 3};
+    //num_t T = 5;
+    vector<num_t> v{1, 2, 3}, w{15, 15, 16};
+    num_t T = 40;
+    
 
         
     
