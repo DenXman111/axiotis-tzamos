@@ -13,14 +13,22 @@
 
 using namespace std;
 int main() {
-    freopen("1.in", "r", stdin);
+    freopen("case.in", "r", stdin);
     //freopen("1.out", "w", stdout);
     int n, T;
     cin >> n >> T;
     vector<int> v(n), w(n);
     for (int i = 0; i < n; i++) cin >> v[i] >> w[i];
         
-    
+    set<int> item_weights;
+    long long S = 0;
+    for (int i = 0; i < n; i++) {
+        S += w[i];
+        item_weights.insert(w[i]);
+    }
+    cout << "Current testcase have " << item_weights.size() << " different weights in item list" << endl;
+    cout << "Sum of weights in item list is " << S << endl;
+
     using std::chrono::high_resolution_clock;
     using std::chrono::duration_cast;
     using std::chrono::duration;
