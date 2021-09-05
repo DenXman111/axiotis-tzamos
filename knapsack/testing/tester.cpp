@@ -13,7 +13,7 @@
 
 using namespace std;
 int main() {
-    freopen("case.in", "r", stdin);
+    freopen("tests/1.in", "r", stdin);
     //freopen("1.out", "w", stdout);
     int n, T;
     cin >> n >> T;

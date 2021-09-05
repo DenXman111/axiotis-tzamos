@@ -24,10 +24,12 @@ public:
         if (w.size() != v.size()) { result = -1; return; }
         
         dp.push_back(*(new vector<num_t>(T + 1, 0)));
+        dp.push_back(*(new vector<num_t>(T + 1, 0)));
+        num_t sum = 0;
         for (int i = 0; i < w.size(); i++){
-            dp.push_back(*(new vector<num_t>(T + 1, 0)));
-            for (num_t j = 0; j <= T; j++) dp[i + 1][j] = max(dp[i][j], (j >= w[i] ? dp[i][j - w[i]] + v[i] : 0)), result = max(result, dp[i + 1][j]);
+            sum += w[i];
+            sum = min(sum, T);
+            for (num_t j = 0; j <= sum; j++) dp[1 - i % 2][j] = max(dp[i % 2][j], (j >= w[i] ? dp[i % 2][j - w[i]] + v[i] : 0)), result = max(result, dp[1 - i % 2][j]);
         };
-        //for (int i = 0; i <= T; i++) cout << " :" << dp[w.size()][i] << endl;
     }
 };
