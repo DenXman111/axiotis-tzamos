@@ -5,22 +5,21 @@
 #include <vector>
 #include <unordered_map>
 
-#include "../unbounded_knapsack.cpp"
-#include "../old_unbounded_knapsack.cpp"
+#include "../unbounded_knapsack_smawk.cpp"
+#include "../unbounded_knapsack_dynamic.cpp"
 
 #define NUM_ROWS 9
 #define NUM_COLS 18
 
 using namespace std;
 int main() {
-    freopen("tests/5.in", "r", stdin);
-    //freopen("case.out", "w", stdout);
+    freopen("tests/1.in", "r", stdin);
     int n, T;
     cin >> n >> T;
-    vector<num_t> v(n), w(n);
+    vector<int> v(n), w(n);
     for (int i = 0; i < n; i++) cin >> v[i] >> w[i];
 
-    set<num_t> item_weights;
+    set<int> item_weights;
     for (int i = 0; i < n; i++) item_weights.insert(w[i]);
     cout << "Current testcase have " << item_weights.size() << " different weights in item list" << endl;
 

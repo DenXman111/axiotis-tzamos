@@ -5,8 +5,8 @@
 #include <vector>
 #include <unordered_map>
 
-#include "../knapsack.cpp"
-#include "../old_knapsack.cpp"
+#include "../knapsack_smawk.cpp"
+#include "../knapsack_dynamic.cpp"
 
 #define NUM_ROWS 9
 #define NUM_COLS 18
@@ -14,7 +14,6 @@
 using namespace std;
 int main() {
     freopen("tests/1.in", "r", stdin);
-    //freopen("1.out", "w", stdout);
     int n, T;
     cin >> n >> T;
     vector<int> v(n), w(n);

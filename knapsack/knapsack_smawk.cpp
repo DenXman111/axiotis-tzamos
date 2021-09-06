@@ -46,10 +46,10 @@ public:
     knapsack(vector<int>& w, vector<int>& v, int T) : w(w), v(v), T(T){
         if (w.size() != v.size()) { result = -1; return; }
         S.resize(T + 1);
-        //Partition items into sets
+
         for (int i = 0; i < w.size(); i++) {
             if (w[i] >= S.size()) S.resize(w[i] + 1);
-            S[w[i]].push_back(v[i]); //O(D log D) if W = {1,..,1}
+            S[w[i]].push_back(v[i]); //O(D log D)
         }
 
         for (int i = 0; i <= T; i++) if (S[i].size()) {
@@ -59,7 +59,6 @@ public:
         }
     
         vector<int> y;
-        //solution for S_i with knapsack size t - b[weights][T]
         dp.push_back(*(new vector<int>(T + 1, 0)));
         dp.push_back(*(new vector<int>(T + 1, 0)));
         long long sum = 0;
